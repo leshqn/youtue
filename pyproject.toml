@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "viralworks"
+version = "0.1.0"
+description = "A self-growing AI short-form video content company (assembly line of agents)."
+readme = "README.md"
+requires-python = ">=3.10"
+# Core runs on the standard library only. Optional extras enable live providers.
+dependencies = []
+
+[project.optional-dependencies]
+anthropic = ["anthropic>=0.40"]
+yaml = ["PyYAML>=6.0"]
+dev = ["pytest>=7.0"]
+
+[project.scripts]
+viralworks = "viralworks.__main__:main"
+
+[tool.setuptools.packages.find]
+include = ["viralworks*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

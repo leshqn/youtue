@@ -1,0 +1,25 @@
+company_name: "VIRALWORKS"
+niche: "AI tools"                                          # your vertical
+brand_voice: "punchy, witty, high-energy"
+platforms: ["instagram_reels", "tiktok", "youtube_shorts"]
+primary_goal: "maximize traction + monetization"          # north star
+reels_per_week_target: 10
+auto_publish: false                                        # human approval required until you flip this
+
+llm:
+  provider: "stub"                                         # anthropic / openai / stub
+  model: "stub-model"                                      # e.g. claude-sonnet-5
+  # api_key comes from .env (LLM_API_KEY), never commit it
+
+video_generation:
+  provider: "stub"                                         # text-to-video provider or 'stub'
+  # api_key comes from .env (VIDEO_API_KEY)
+
+integrations:                                              # leave blank to use stubs
+  instagram_graph_api: ""
+  tiktok_api: ""
+  youtube_data_api: ""
+  trend_data_source: ""
+
+learning_store: "sqlite"                                   # swappable
+growth_cycle: "weekly"
