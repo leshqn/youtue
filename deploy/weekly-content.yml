@@ -1,0 +1,54 @@
+name: Weekly content plan
+
+# Runs the VIRALWORKS engine in the cloud on a schedule — no laptop needed.
+on:
+  schedule:
+    # Every Monday at 06:00 UTC (09:00 EAT / Nairobi). Adjust to taste.
+    - cron: "0 6 * * 1"
+  workflow_dispatch:      # lets you run it manually from the Actions tab
+    inputs:
+      reels:
+        description: "How many reels to plan"
+        required: false
+        default: "5"
+
+permissions:
+  contents: write          # so the job can commit the generated plan back
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run the tests
+        run: |
+          python -m pip install --quiet pytest
+          python -m pytest -q
+
+      - name: Generate this week's content plan
+        run: python scripts/weekly_plan.py "${{ github.event.inputs.reels || 5 }}"
+
+      - name: Commit the plan (and the engine's learnings)
+        run: |
+          git config user.name  "viralworks-bot"
+          git config user.email "actions@github.com"
+          git add -f content_plans data playbooks
+          if git diff --staged --quiet; then
+            echo "Nothing new to commit."
+          else
+            git commit -m "Weekly content plan: $(date -u +%Y-%m-%d)"
+            git push
+          fi
+
+      - name: Upload the plan as a downloadable file
+        uses: actions/upload-artifact@v4
+        with:
+          name: content-plan
+          path: content_plans/LATEST.md
