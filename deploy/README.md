@@ -23,3 +23,19 @@ git add .github/workflows/weekly-content.yml && git commit -m "Add weekly workfl
 
 Once installed, use **Actions → Weekly content plan → Run workflow** to trigger
 it immediately instead of waiting for Monday.
+
+## Get the plan emailed to you every week (optional)
+
+The workflow runs `scripts/email_plan.py`, which quietly does nothing unless
+you add these **repository secrets** (Settings → Secrets and variables →
+Actions → *New repository secret*):
+
+| Secret | Value |
+|---|---|
+| `MAIL_USERNAME` | your Gmail address |
+| `MAIL_PASSWORD` | a Google **App Password** (16 characters, not your normal password) |
+| `MAIL_TO` | *(optional)* a different destination address |
+
+Create an App Password at <https://myaccount.google.com/apppasswords> — this
+requires 2-Step Verification to be on. Never commit the password itself; it
+lives only in GitHub secrets.

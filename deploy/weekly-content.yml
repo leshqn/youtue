@@ -47,6 +47,14 @@ jobs:
             git push
           fi
 
+      - name: Email the plan to me
+        # Skipped automatically if the MAIL_* secrets are not set.
+        env:
+          MAIL_USERNAME: ${{ secrets.MAIL_USERNAME }}
+          MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
+          MAIL_TO: ${{ secrets.MAIL_TO }}
+        run: python scripts/email_plan.py
+
       - name: Upload the plan as a downloadable file
         uses: actions/upload-artifact@v4
         with:
